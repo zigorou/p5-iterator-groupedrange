@@ -1,11 +1,11 @@
-This is Perl module Iterator::Grouped.
+This is Perl module Iterator::GroupedRange.
 
 INSTALLATION
 
-Iterator::Grouped installation is straightforward. If your CPAN shell is set up,
+Iterator::GroupedRange installation is straightforward. If your CPAN shell is set up,
 you should just be able to do
 
-    % cpan Iterator::Grouped
+    % cpan Iterator::GroupedRange
 
 Download it, unpack it, then build it as per the usual:
 
@@ -18,9 +18,9 @@ Then install it:
 
 DOCUMENTATION
 
-Iterator::Grouped documentation is available as in POD. So you can do:
+Iterator::GroupedRange documentation is available as in POD. So you can do:
 
-    % perldoc Iterator::Grouped
+    % perldoc Iterator::GroupedRange
 
 to read the documentation online with your favorite pager.
 

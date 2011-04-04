@@ -2,15 +2,16 @@ use strict;
 use warnings;
 
 use Test::More;
-use Iterator::Grouped;
+use Iterator::GroupedRange;
 
 our @ds = (
-                [ 1 .. 5 ],
-            [ 6 .. 15 ],
-            [ 16 .. 30 ],
-            [ 31 .. 32 ],
-            [ 33 .. 37 ],
-
+    [ 1 .. 5 ],
+    [ 6 .. 15 ],
+    [ 16 .. 30 ],
+    [ 31 .. 32 ],
+    [ 33 .. 37 ],
+    [ 38 .. 58 ],
+    [ 59 .. 61 ],
 );
 
 sub generator {
@@ -46,105 +47,97 @@ sub test_has_next {
 
 sub test_next {
     my ( $iterator, $expects, $times ) = @_;
-    is_deeply(
-        $iterator->next,
-        $expects,
-        sprintf(
-            'next() return value (times: %d)',
-            $times
-        )
-    );
+    is_deeply( $iterator->next, $expects,
+        sprintf( 'next() return value (times: %d)', $times ) );
 }
 
 subtest 'call has_next() and next() (grouped: 10)' => sub {
-    my $iterator = Iterator::Grouped->new(
-        code => generator(@ds),
-        grouped => 10,
-    );
+    my $iterator = Iterator::GroupedRange->new( generator(@ds), 10, );
 
     my @test_cases = (
         +{ is_last => 0, has_next => 1, next => [ 1 .. 10 ], },
         +{ is_last => 0, has_next => 1, next => [ 11 .. 20 ], },
         +{ is_last => 0, has_next => 1, next => [ 21 .. 30 ], },
-        +{ is_last => 0, has_next => 1, next => [ 31 .. 37 ], },
+        +{ is_last => 0, has_next => 1, next => [ 31 .. 40 ], },
+        +{ is_last => 0, has_next => 1, next => [ 41 .. 50 ], },
+        +{ is_last => 0, has_next => 1, next => [ 51 .. 60 ], },
+        +{ is_last => 0, has_next => 1, next => [61], },
         +{ is_last => 1, has_next => 0, next => [], },
     );
 
-    for ( my $i = 0; $i < @test_cases; $i++ ) {
+    for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
         my $test_case = $test_cases[$i];
         test_is_last( $iterator, $test_case->{is_last}, $i );
         test_has_next( $iterator, $test_case->{has_next}, $i );
         test_next( $iterator, $test_case->{next}, $i );
     }
-    
+
     done_testing;
 };
 
 subtest 'call only next() (grouped: 10)' => sub {
-    my $iterator = Iterator::Grouped->new(
-        code => generator(@ds),
-        grouped => 10,
-    );
+    my $iterator = Iterator::GroupedRange->new( generator(@ds), 10, );
 
     my @test_cases = (
         +{ is_last => 0, next => [ 1 .. 10 ], },
         +{ is_last => 0, next => [ 11 .. 20 ], },
         +{ is_last => 0, next => [ 21 .. 30 ], },
-        +{ is_last => 0, next => [ 31 .. 37 ], },
+        +{ is_last => 0, next => [ 31 .. 40 ], },
+        +{ is_last => 0, next => [ 41 .. 50 ], },
+        +{ is_last => 0, next => [ 51 .. 60 ], },
+        +{ is_last => 0, next => [61], },
         +{ is_last => 1, next => [], },
     );
 
-    for ( my $i = 0; $i < @test_cases; $i++ ) {
+    for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
         my $test_case = $test_cases[$i];
         test_is_last( $iterator, $test_case->{is_last}, $i );
         test_next( $iterator, $test_case->{next}, $i );
     }
-    
+
     done_testing;
 };
 
 subtest 'call has_next() and next() (grouped: 15)' => sub {
-    my $iterator = Iterator::Grouped->new(
-        code => generator(@ds),
-        grouped => 15,
-    );
+    my $iterator = Iterator::GroupedRange->new( generator(@ds), 15, );
 
     my @test_cases = (
         +{ is_last => 0, has_next => 1, next => [ 1 .. 15 ], },
         +{ is_last => 0, has_next => 1, next => [ 16 .. 30 ], },
-        +{ is_last => 0, has_next => 1, next => [ 31 .. 37 ], },
+        +{ is_last => 0, has_next => 1, next => [ 31 .. 45 ], },
+        +{ is_last => 0, has_next => 1, next => [ 46 .. 60 ], },
+        +{ is_last => 0, has_next => 1, next => [61], },
         +{ is_last => 1, has_next => 0, next => [], },
     );
 
-    for ( my $i = 0; $i < @test_cases; $i++ ) {
+    for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
         my $test_case = $test_cases[$i];
         test_is_last( $iterator, $test_case->{is_last}, $i );
         test_has_next( $iterator, $test_case->{has_next}, $i );
         test_next( $iterator, $test_case->{next}, $i );
     }
-    
+
     done_testing;
 };
 
 subtest 'call only next() (grouped: 15)' => sub {
-    my $iterator = Iterator::Grouped->new(
-        code => generator(@ds),
-        grouped => 15,
-    );
+    my $iterator = Iterator::GroupedRange->new( generator(@ds), 15, );
 
     my @test_cases = (
         +{ is_last => 0, next => [ 1 .. 15 ], },
         +{ is_last => 0, next => [ 16 .. 30 ], },
-        +{ is_last => 0, next => [ 31 .. 37 ], },
+        +{ is_last => 0, next => [ 31 .. 45 ], },
+        +{ is_last => 0, next => [ 46 .. 60 ], },
+        +{ is_last => 0, next => [61], },
         +{ is_last => 1, next => [], },
     );
 
-    for ( my $i = 0; $i < @test_cases; $i++ ) {
+    for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
         my $test_case = $test_cases[$i];
         test_is_last( $iterator, $test_case->{is_last}, $i );
         test_next( $iterator, $test_case->{next}, $i );
     }
-    
+
     done_testing;
 };
 

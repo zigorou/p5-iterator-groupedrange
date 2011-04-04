@@ -11,12 +11,14 @@ inc/Module/Install/Repository.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 inc/Test/More.pm
-lib/Iterator/Grouped.pm
+lib/Iterator/GroupedRange.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
-t/00_compile.t
+t/array.t
+t/code.t
+t/compile.t
 xt/01_podspell.t
 xt/02_perlcritic.t
 xt/03_pod.t

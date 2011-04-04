@@ -7,4 +7,5 @@ all_pod_files_spelling_ok('lib');
 __DATA__
 Toru Yamaguchi
 zigorou@cpan.org
-Iterator::Grouped
+Iterator::GroupedRange
+callback
