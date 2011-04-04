@@ -1,5 +1,5 @@
 use inc::Module::Install;
-name 'Iterator-Grouped';
+name 'Iterator-GroupedRange';
 all_from 'lib/Iterator/GroupedRange.pm';
 
 tests 't/*.t';
