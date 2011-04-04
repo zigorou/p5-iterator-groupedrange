@@ -1,4 +1,7 @@
 Revision history for Perl extension Iterator::GroupedRange
 
+0.02    Mon Apr  4 23:40:13 2011
+        - Fixed wrong synopsis
+
 0.01    Mon Apr  4 13:53:32 2011
         - original version

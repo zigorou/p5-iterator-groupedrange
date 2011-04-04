@@ -3,7 +3,7 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new {
     my $class = shift;
@@ -86,7 +86,7 @@ Iterator::GroupedRange - Iterate grouped array
     [ 11 .. 25 ],
   );
 
-  my $i1 = Iterator::GroupedRange->new( sub {}, 10 );
+  my $i1 = Iterator::GroupedRange->new( sub { shift @ds; }, 10 );
   $i1->next; # [ 1 .. 10 ]
   $i1->next; # [ 11 .. 20 ]
   $i1->next; # [ 21 .. 25 ]
