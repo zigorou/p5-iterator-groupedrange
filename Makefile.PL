@@ -2,8 +2,6 @@ use inc::Module::Install;
 name 'Iterator-Grouped';
 all_from 'lib/Iterator/GroupedRange.pm';
 
-# requires '';
-
 tests 't/*.t';
 author_tests 'xt';
 
