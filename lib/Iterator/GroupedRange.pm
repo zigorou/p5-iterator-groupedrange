@@ -3,7 +3,7 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub new {
     my $class = shift;
@@ -74,7 +74,7 @@ __END__
 
 =head1 NAME
 
-Iterator::GroupedRange - Iterate grouped array
+Iterator::GroupedRange - Iterates rows is grouped by range
 
 =head1 SYNOPSIS
 
@@ -98,7 +98,29 @@ Iterator::GroupedRange - Iterate grouped array
 
 =head1 DESCRIPTION
 
-Iterator::GroupedRange is iteration module to apply grouped range array given callback or array.
+Iterator::GroupedRange is module to iterate rows grouped by range. It accepts other iterator to get rows, or list.
+
+=head1 METHODS
+
+=head2 new( \&iterator[, $range] )
+
+Return new instance. The range variable is default 1000.
+
+=head2 new( \@list[, $range] )
+
+Return new instance. The range variable is default 1000.
+
+=head2 has_next()
+
+Return which has next rows or not.
+
+=head2 next()
+
+Return next rows.
+
+=head2 is_last()
+
+Return which is ended of iteration or not.
 
 =head1 AUTHOR
 
