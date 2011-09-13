@@ -3,26 +3,36 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub new {
     my $class = shift;
-    my ( $code, $range ) = @_;
+    my ( $code, $range, $opts ) = @_;
+
     $range ||= 1000;
+    $opts  ||= +{};
+
+    %$opts = (
+        rows => undef,
+        %$opts,
+    );
 
     if ( ref $code eq 'ARRAY' ) {
         my @ds = @$code;
+        $opts->{rows} = scalar @ds;
         $code = sub {
             [ splice( @ds, 0, $range ) ];
         };
     }
 
     return bless +{
-        code      => $code,
-        range     => $range,
-        is_last   => 0,
-        _has_next => undef,
-        _buffer   => [],
+        code           => $code,
+        range          => $range,
+        is_last        => 0,
+        rows           => $opts->{rows},
+        _has_next      => undef,
+        _buffer        => [],
+        _append_buffer => [],
     } => $class;
 }
 
@@ -51,22 +61,48 @@ sub next {
     while ( @buffer < $self->{range} ) {
         my $rv = $self->{code}->();
         unless ( defined $rv && @$rv > 0 ) {
-            $self->{is_last} = 1;
-            last;
+            if ( @{$self->{_append_buffer}} > 0 ) {
+                my @append_buffer = @{$self->{_append_buffer}};
+                $self->{code} = sub {
+                    return @append_buffer > 0 ?
+                        [ splice( @append_buffer, 0, $self->{range} ) ] : undef;
+                };
+                $self->{_append_buffer} = [];
+                return $self->next;
+            }
+            else {
+                $self->{is_last} = 1;
+                last;
+            }
         }
         push( @buffer, @$rv );
     }
 
     my @rs = splice( @buffer, 0, $self->{range} );
 
-    $self->{_buffer} = [@buffer];
+    $self->{_buffer}   = [ @buffer ];
     $self->{_has_next} = @buffer > 0 ? 1 : 0;
 
     return \@rs;
 }
 
+sub append {
+    my $self = shift;
+    my $rows = ( @_ == 1 && ref $_[0] eq 'ARRAY' ) ? $_[0] : [ @_ ];
+    push(@{$self->{_append_buffer}}, @$rows);
+}
+
 sub is_last {
     $_[0]->{is_last};
+}
+
+sub rows {
+    if ( @_ == 2 ) {
+        $_[0]->{rows} = $_[1];
+    }
+    else {
+        return $_[0]->{rows};
+    }
 }
 
 1;
@@ -74,7 +110,7 @@ __END__
 
 =head1 NAME
 
-Iterator::GroupedRange - Iterates rows is grouped by range
+Iterator::GroupedRange - Iterates retrieving a set of specified number rows
 
 =head1 SYNOPSIS
 
@@ -98,21 +134,49 @@ Iterator::GroupedRange - Iterates rows is grouped by range
 
 =head1 DESCRIPTION
 
-Iterator::GroupedRange is module to iterate rows grouped by range. It accepts other iterator to get rows, or list.
+Iterator::GroupedRange is module to iterate retrieving a set of specified number rows.
+Code reference or list reference becomes provider of sets.
+
+It accepts other iterator to get rows, or list.
 
 =head1 METHODS
 
-=head2 new( \&iterator[, $range] )
+=head2 new( \&provider[, $range, \%opts] )
 
-Return new instance. The range variable is default 1000.
+=head2 new( \@list[, $range, \%opts] )
 
-=head2 new( \@list[, $range] )
+Return new instance. Arguments details are:
 
-Return new instance. The range variable is default 1000.
+=over
+
+=item &provider
+
+The code reference must be taking a list reference or undef.
+If the return value is undef or empty array reference, L<#has_next()> will return false value.
+
+=item @list
+
+This list reference will be code reference that will be return a set of specified number rows.
+
+=item $range
+
+Most number of retriving rows by each iteration. Default value is 1000.
+
+=item %opts
+
+=over
+
+=item rows
+
+Accessor of rows field.
+
+=back
+
+=back
 
 =head2 has_next()
 
-Return which has next rows or not.
+Return which the iterator has next rows or not.
 
 =head2 next()
 
@@ -120,7 +184,11 @@ Return next rows.
 
 =head2 is_last()
 
-Return which is ended of iteration or not.
+Return which the iterator becomes ended of iteration or not.
+
+=head2 rows()
+
+Return total rows.
 
 =head1 AUTHOR
 
