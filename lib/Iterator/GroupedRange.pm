@@ -3,8 +3,6 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
-use Scalar::Util qw(blessed);
-
 our $VERSION = '0.04';
 
 sub new {

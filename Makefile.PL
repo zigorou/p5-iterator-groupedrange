@@ -3,8 +3,6 @@ use inc::Module::Install;
 name 'Iterator-GroupedRange';
 all_from 'lib/Iterator/GroupedRange.pm';
 
-requires 'Scalar::Util';
-
 tests 't/*.t';
 author_tests 'xt';
 
