@@ -141,6 +141,33 @@ subtest 'call only next() (grouped: 15)' => sub {
     done_testing;
 };
 
+subtest 'append' => sub {
+    my $iterator = Iterator::GroupedRange->new( generator(@ds), 10, );
+
+    $iterator->append([ 62 .. 67 ]);
+    $iterator->append(68 .. 75);
+
+    my @test_cases = (
+        +{ is_last => 0, next => [ 1  .. 10 ], },
+        +{ is_last => 0, next => [ 11 .. 20 ], },
+        +{ is_last => 0, next => [ 21 .. 30 ], },
+        +{ is_last => 0, next => [ 31 .. 40 ], },
+        +{ is_last => 0, next => [ 41 .. 50 ], },
+        +{ is_last => 0, next => [ 51 .. 60 ], },
+        +{ is_last => 0, next => [ 61 .. 70 ], },
+        +{ is_last => 0, next => [ 71 .. 75 ], },
+        +{ is_last => 1, next => [], },
+    );
+
+    for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
+        my $test_case = $test_cases[$i];
+        test_is_last( $iterator, $test_case->{is_last}, $i );
+        test_next( $iterator, $test_case->{next}, $i );
+    }
+
+    done_testing;
+};
+
 done_testing;
 
 # Local Variables:

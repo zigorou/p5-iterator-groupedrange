@@ -1,5 +1,10 @@
 Revision history for Perl extension Iterator::GroupedRange
 
+0.04    Wed Sep 14 15:20:41 2011
+        - Add rows() accessor
+        - Add append() method
+        - Increase pod document
+
 0.03    Tue Apr  5 02:02:15 2011
         - Add methods description
 

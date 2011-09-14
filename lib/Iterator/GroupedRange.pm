@@ -3,6 +3,8 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
+use Scalar::Util qw(blessed);
+
 our $VERSION = '0.04';
 
 sub new {
@@ -63,11 +65,15 @@ sub next {
         unless ( defined $rv && @$rv > 0 ) {
             if ( @{$self->{_append_buffer}} > 0 ) {
                 my @append_buffer = @{$self->{_append_buffer}};
+
                 $self->{code} = sub {
                     return @append_buffer > 0 ?
                         [ splice( @append_buffer, 0, $self->{range} ) ] : undef;
                 };
+
+                $self->{_buffer}   = [ @buffer ];
                 $self->{_append_buffer} = [];
+
                 return $self->next;
             }
             else {
@@ -89,6 +95,11 @@ sub next {
 sub append {
     my $self = shift;
     my $rows = ( @_ == 1 && ref $_[0] eq 'ARRAY' ) ? $_[0] : [ @_ ];
+
+    if ( defined $self->{rows} ) {
+        $self->{rows} += scalar @$rows;
+    }
+
     push(@{$self->{_append_buffer}}, @$rows);
 }
 
@@ -195,6 +206,29 @@ Return total rows.
 Toru Yamaguchi E<lt>zigorou@cpan.orgE<gt>
 
 =head1 SEE ALSO
+
+=over
+
+=item L<List::MoreUtils>
+
+L<List::MoreUtils> has natatime subroutine looks like this module.
+The natatime subroutine can treat only list.
+
+=item L<DBI>
+
+L<DBI>'s fetchall_arrayref can accepts max_rows argument.
+This feature is similar to this module. For example:
+
+  use DBI;
+  use Data::Dumper;
+
+  my $sth = $dbh->prepare('SELECT id FROM people');
+  while ( my $ids = $sth->fetchall_arrayref(undef, 100) ) {
+      $ids = [ map { $_->[0] } @$ids ];
+      warn Dumper($ids);
+  }
+
+=back
 
 =head1 LICENSE
 
