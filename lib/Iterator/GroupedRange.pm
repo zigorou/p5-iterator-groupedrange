@@ -114,6 +114,11 @@ sub rows {
     }
 }
 
+sub renge {
+    return $_[0]->{range} = $_[1] if @_ == 2;
+    shift->{range};
+}
+
 1;
 __END__
 
