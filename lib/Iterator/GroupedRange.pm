@@ -169,7 +169,7 @@ This list reference will be code reference that will be return a set of specifie
 
 =item $range
 
-Most number of retriving rows by each iteration. Default value is 1000.
+Most number of retrieving rows by each iteration. Default value is 1000.
 
 =item %opts
 
@@ -209,8 +209,8 @@ Toru Yamaguchi E<lt>zigorou@cpan.orgE<gt>
 
 =item L<List::MoreUtils>
 
-L<List::MoreUtils> has natatime subroutine looks like this module.
-The natatime subroutine can treat only list.
+L<List::MoreUtils> has C<natatime> subroutine looks like this module.
+The C<natatime> subroutine can treat only list.
 
 =item L<DBI>
 
