@@ -3,7 +3,7 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub new {
     my $class = shift;
@@ -21,7 +21,7 @@ sub new {
         my @ds = @$code;
         $opts->{rows} = scalar @ds;
         $code = sub {
-            [ splice( @ds, 0, $range ) ];
+            @ds > 0 ? [ splice( @ds, 0, $range ) ] : undef;
         };
     }
 
@@ -41,7 +41,7 @@ sub has_next {
     return 0 if ( $self->{is_last} );
     return 1 if ( $self->{_has_next} );
     $self->{_buffer} = $self->{code}->();
-    if ( defined $self->{_buffer} && @{ $self->{_buffer} } > 0 ) {
+    if ( defined $self->{_buffer} ) {
         $self->{_has_next} = 1;
         return 1;
     }
@@ -53,14 +53,14 @@ sub has_next {
 sub next {
     my $self = shift;
 
-    return [] if ( $self->{is_last} );
-    return [] unless ( defined $self->{_buffer} );
+    return if ( $self->{is_last} );
+    return unless ( defined $self->{_buffer} );
 
     my @buffer = @{ $self->{_buffer} };
 
     while ( @buffer < $self->{range} ) {
         my $rv = $self->{code}->();
-        unless ( defined $rv && @$rv > 0 ) {
+        unless ( defined $rv ) {
             if ( @{$self->{_append_buffer}} > 0 ) {
                 my @append_buffer = @{$self->{_append_buffer}};
 
