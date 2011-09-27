@@ -57,14 +57,14 @@ subtest 'call has_next() and next() (grouped: 10)' => sub {
     my $iterator = Iterator::GroupedRange->new( generator(@ds), 10, );
 
     my @test_cases = (
-        +{ is_last => 0, has_next => 1, next => [ 1 .. 10 ], },
-        +{ is_last => 0, has_next => 1, next => [ 11 .. 20 ], },
-        +{ is_last => 0, has_next => 1, next => [ 21 .. 30 ], },
-        +{ is_last => 0, has_next => 1, next => [ 31 .. 40 ], },
-        +{ is_last => 0, has_next => 1, next => [ 41 .. 50 ], },
-        +{ is_last => 0, has_next => 1, next => [ 51 .. 60 ], },
-        +{ is_last => 0, has_next => 1, next => [61], },
-        +{ is_last => 1, has_next => 0, next => undef, },
+        { is_last => 0, has_next => 1, next => [ 1 .. 10 ], },
+        { is_last => 0, has_next => 1, next => [ 11 .. 20 ], },
+        { is_last => 0, has_next => 1, next => [ 21 .. 30 ], },
+        { is_last => 0, has_next => 1, next => [ 31 .. 40 ], },
+        { is_last => 0, has_next => 1, next => [ 41 .. 50 ], },
+        { is_last => 0, has_next => 1, next => [ 51 .. 60 ], },
+        { is_last => 0, has_next => 1, next => [61], },
+        { is_last => 1, has_next => 0, next => undef, },
     );
 
     for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
@@ -81,14 +81,14 @@ subtest 'call only next() (grouped: 10)' => sub {
     my $iterator = Iterator::GroupedRange->new( generator(@ds), 10, );
 
     my @test_cases = (
-        +{ is_last => 0, next => [ 1 .. 10 ], },
-        +{ is_last => 0, next => [ 11 .. 20 ], },
-        +{ is_last => 0, next => [ 21 .. 30 ], },
-        +{ is_last => 0, next => [ 31 .. 40 ], },
-        +{ is_last => 0, next => [ 41 .. 50 ], },
-        +{ is_last => 0, next => [ 51 .. 60 ], },
-        +{ is_last => 0, next => [61], },
-        +{ is_last => 1, next => undef, },
+        { is_last => 0, next => [ 1 .. 10 ], },
+        { is_last => 0, next => [ 11 .. 20 ], },
+        { is_last => 0, next => [ 21 .. 30 ], },
+        { is_last => 0, next => [ 31 .. 40 ], },
+        { is_last => 0, next => [ 41 .. 50 ], },
+        { is_last => 0, next => [ 51 .. 60 ], },
+        { is_last => 0, next => [61], },
+        { is_last => 1, next => undef, },
     );
 
     for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
@@ -104,12 +104,12 @@ subtest 'call has_next() and next() (grouped: 15)' => sub {
     my $iterator = Iterator::GroupedRange->new( generator(@ds), 15, );
 
     my @test_cases = (
-        +{ is_last => 0, has_next => 1, next => [ 1 .. 15 ], },
-        +{ is_last => 0, has_next => 1, next => [ 16 .. 30 ], },
-        +{ is_last => 0, has_next => 1, next => [ 31 .. 45 ], },
-        +{ is_last => 0, has_next => 1, next => [ 46 .. 60 ], },
-        +{ is_last => 0, has_next => 1, next => [61], },
-        +{ is_last => 1, has_next => 0, next => undef, },
+        { is_last => 0, has_next => 1, next => [ 1 .. 15 ], },
+        { is_last => 0, has_next => 1, next => [ 16 .. 30 ], },
+        { is_last => 0, has_next => 1, next => [ 31 .. 45 ], },
+        { is_last => 0, has_next => 1, next => [ 46 .. 60 ], },
+        { is_last => 0, has_next => 1, next => [61], },
+        { is_last => 1, has_next => 0, next => undef, },
     );
 
     for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
@@ -126,12 +126,12 @@ subtest 'call only next() (grouped: 15)' => sub {
     my $iterator = Iterator::GroupedRange->new( generator(@ds), 15, );
 
     my @test_cases = (
-        +{ is_last => 0, next => [ 1 .. 15 ], },
-        +{ is_last => 0, next => [ 16 .. 30 ], },
-        +{ is_last => 0, next => [ 31 .. 45 ], },
-        +{ is_last => 0, next => [ 46 .. 60 ], },
-        +{ is_last => 0, next => [61], },
-        +{ is_last => 1, next => undef, },
+        { is_last => 0, next => [ 1 .. 15 ], },
+        { is_last => 0, next => [ 16 .. 30 ], },
+        { is_last => 0, next => [ 31 .. 45 ], },
+        { is_last => 0, next => [ 46 .. 60 ], },
+        { is_last => 0, next => [61], },
+        { is_last => 1, next => undef, },
     );
 
     for ( my $i = 0 ; $i < @test_cases ; $i++ ) {
@@ -150,15 +150,15 @@ subtest 'append' => sub {
     $iterator->append(68 .. 75);
 
     my @test_cases = (
-        +{ is_last => 0, next => [ 1  .. 10 ], },
-        +{ is_last => 0, next => [ 11 .. 20 ], },
-        +{ is_last => 0, next => [ 21 .. 30 ], },
-        +{ is_last => 0, next => [ 31 .. 40 ], },
-        +{ is_last => 0, next => [ 41 .. 50 ], },
-        +{ is_last => 0, next => [ 51 .. 60 ], },
-        +{ is_last => 0, next => [ 61 .. 70 ], },
-        +{ is_last => 0, next => [ 71 .. 75 ], },
-        +{ is_last => 1, next => undef, },
+        { is_last => 0, next => [ 1  .. 10 ], },
+        { is_last => 0, next => [ 11 .. 20 ], },
+        { is_last => 0, next => [ 21 .. 30 ], },
+        { is_last => 0, next => [ 31 .. 40 ], },
+        { is_last => 0, next => [ 41 .. 50 ], },
+        { is_last => 0, next => [ 51 .. 60 ], },
+        { is_last => 0, next => [ 61 .. 70 ], },
+        { is_last => 0, next => [ 71 .. 75 ], },
+        { is_last => 1, next => undef, },
     );
 
     for ( my $i = 0 ; $i < @test_cases ; $i++ ) {

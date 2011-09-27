@@ -1,5 +1,8 @@
 Revision history for Perl extension Iterator::GroupedRange
 
+0.05    Tue Sep 27 16:54:14 2011
+        - This version includes an important changes. It is empty array is not terminate condition.
+
 0.04    Wed Sep 14 15:20:41 2011
         - Add rows() accessor
         - Add append() method

@@ -10,7 +10,7 @@ sub new {
     my ( $code, $range, $opts ) = @_;
 
     $range ||= 1000;
-    $opts  ||= +{};
+    $opts  ||= {};
 
     %$opts = (
         rows => undef,
@@ -25,7 +25,7 @@ sub new {
         };
     }
 
-    return bless +{
+    return bless {
         code           => $code,
         range          => $range,
         is_last        => 0,
@@ -114,7 +114,7 @@ sub rows {
     }
 }
 
-sub renge {
+sub range {
     return $_[0]->{range} = $_[1] if @_ == 2;
     shift->{range};
 }
@@ -180,9 +180,24 @@ Most number of retrieving rows by each iteration. Default value is 1000.
 
 =over
 
+=item range
+
+Grouped size.
+
 =item rows
 
-Accessor of rows field.
+Number of rows. For example, using L<DBI>'s statement handle:
+
+  my $sth = $dbh->prepare('SELECT blah FROM example');
+  $sth->execute;
+  my $iter; $iter = Iterator::GroupedRange->new(sub {
+      if ( my $ids = $sth->fetchrow_arrayref( undef, $iter->range ) ) {
+          return [ map { $_->[0] } @$ids ];
+      }
+      else {
+          return;
+      }
+  }, { rows => $sth->rows, range => 1000 });
 
 =back
 
@@ -199,6 +214,15 @@ Return next rows.
 =head2 is_last()
 
 Return which the iterator becomes ended of iteration or not.
+
+=head2 append(@items)
+=head2 append(\@items)
+
+Append new items.
+
+=head2 range()
+
+Return grouped size.
 
 =head2 rows()
 
