@@ -177,6 +177,13 @@ subtest 'empty array' => sub {
     ok !$iterator->has_next, 'has_next() return false';
 };
 
+subtest 'append after contract in empty array' => sub {
+    my $iterator = Iterator::GroupedRange->new([]);
+
+    is $iterator->append([1..10]), 10, 'append success';
+    ok $iterator->has_next, 'has_next() return true';
+};
+
 done_testing;
 
 # Local Variables:

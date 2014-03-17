@@ -99,6 +99,12 @@ sub append {
     }
 
     push(@{$self->{_append_buffer}}, @$rows);
+
+    if (!$self->{_has_next} && @{$self->{_append_buffer}}) {
+        $self->{_has_next} = 1;
+    }
+
+    return scalar @$rows;
 }
 
 sub is_last {
