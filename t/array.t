@@ -169,6 +169,14 @@ subtest 'append' => sub {
     done_testing;
 };
 
+subtest 'empty array' => sub {
+    my $iterator = Iterator::GroupedRange->new([]);
+
+    is($iterator->rows, 0, 'rows ok');
+    ok !$iterator->next, 'next() return empty';
+    ok !$iterator->has_next, 'has_next() return false';
+};
+
 done_testing;
 
 # Local Variables:

@@ -87,7 +87,7 @@ sub next {
     $self->{_buffer}   = [ @buffer ];
     $self->{_has_next} = @buffer > 0 ? 1 : 0;
 
-    return \@rs;
+    return @rs ? \@rs : ();
 }
 
 sub append {
