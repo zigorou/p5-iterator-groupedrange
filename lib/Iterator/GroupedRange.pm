@@ -3,7 +3,7 @@ package Iterator::GroupedRange;
 use strict;
 use warnings;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 sub new {
     my $class = shift;
