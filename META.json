@@ -59,7 +59,7 @@
          "web" : "https://github.com/zigorou/p5-iterator-groupedrange"
       }
    },
-   "version" : "0.06",
+   "version" : "0.07",
    "x_contributors" : [
       "Toru Yamaguchi <yamaguchi.toru@51547-mac.dena.local>",
       "xaicron <xaicron@gmail.com>"

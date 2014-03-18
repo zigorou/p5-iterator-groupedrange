@@ -2,6 +2,10 @@ Revision history for Perl extension Iterator::GroupedRange
 
 {{$NEXT}}
 
+0.07 2014-03-18T06:26:12Z
+    - Fixed when constract in empty array (#1)
+    - minil migrate
+
 0.06    Tue Sep 27 17:14:32 2011
         - Fixed broken tar ball. (OSX 10.6's tar command is based BSD. 
           So 0.04 and 0.05's tar ball is broken to the system used gnu tar like a Linux)
