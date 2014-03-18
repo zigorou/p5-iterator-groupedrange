@@ -87,7 +87,7 @@ sub next {
     $self->{_buffer}   = [ @buffer ];
     $self->{_has_next} = @buffer > 0 ? 1 : 0;
 
-    return \@rs;
+    return @rs ? \@rs : ();
 }
 
 sub append {
@@ -99,6 +99,12 @@ sub append {
     }
 
     push(@{$self->{_append_buffer}}, @$rows);
+
+    if (!$self->{_has_next} && @{$self->{_append_buffer}}) {
+        $self->{_has_next} = 1;
+    }
+
+    return scalar @$rows;
 }
 
 sub is_last {
