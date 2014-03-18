@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/zigorou/p5-iterator-groupedrange.png?branch=master)](https://travis-ci.org/zigorou/p5-iterator-groupedrange)
 # NAME
 
 Iterator::GroupedRange - Iterates retrieving a set of specified number rows
