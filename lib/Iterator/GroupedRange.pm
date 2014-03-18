@@ -222,6 +222,7 @@ Return next rows.
 Return which the iterator becomes ended of iteration or not.
 
 =head2 append(@items)
+
 =head2 append(\@items)
 
 Append new items.
